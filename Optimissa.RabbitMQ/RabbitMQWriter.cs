@@ -9,9 +9,9 @@ namespace Optimissa.RabbitMQ
         ConnectionFactory _factory;
 
 
-        public RabbitMQWriter(RabbitConnection rabbitConnection)
+        public RabbitMQWriter()
         {
-            _connection = rabbitConnection;
+            _connection = new RabbitConnection();
             _factory = _connection.CreateConnection();
         }
 

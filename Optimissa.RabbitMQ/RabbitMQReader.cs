@@ -6,50 +6,62 @@ namespace Optimissa.RabbitMQ
 {
     public class RabbitMQReader
     {
-         public static void Reader(string[] args)
-        {
-            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };
+        private static readonly RabbitMQReader _reader = new RabbitMQReader();
+        private ConnectionFactory _factory;
+        private RabbitConnection _connection;
 
-            using var connection = factory.CreateConnection();
+        private RabbitMQReader()
+        {
+            _connection = new RabbitConnection();
+            _factory = _connection.CreateConnection();
+        }
+
+        public static RabbitMQReader Instance
+        {
+            get
+            {
+                return _reader;
+            }
+        }
+
+
+        public async Task Read(string[] topics, Action<BasicDeliverEventArgs> act)
+        {
+
+            using var connection = _factory.CreateConnection();
             using var channel = connection.CreateModel();
 
             channel.ExchangeDeclare(exchange: "topic_logs", type: ExchangeType.Topic);
-            // declare a server-named queue
             var queueName = channel.QueueDeclare().QueueName;
 
-            if (args.Length < 1)
-            {
-                Console.Error.WriteLine("Usage: {0} [binding_key...]",
-                                        Environment.GetCommandLineArgs()[0]);
-                Console.WriteLine(" Press [enter] to exit.");
-                Console.ReadLine();
-                Environment.ExitCode = 1;
+            if (topics.Length < 1 || topics == null)
                 return;
-            }
 
-            foreach (var bindingKey in args)
+
+            foreach (var bindingKey in topics)
             {
                 channel.QueueBind(queue: queueName,
                                   exchange: "topic_logs",
                                   routingKey: bindingKey);
             }
 
-            Console.WriteLine(" [*] Waiting for messages. To exit press CTRL+C");
-
             var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                var routingKey = ea.RoutingKey;
-                Console.WriteLine($" [x] Received '{routingKey}':'{message}'");
-            };
+
+
+            consumer.Received += (model, ea) => act(ea);
+
             channel.BasicConsume(queue: queueName,
                                  autoAck: true,
                                  consumer: consumer);
 
-            Console.WriteLine(" Press [enter] to exit.");
-            Console.ReadLine();
+
+            Console.Read();
+        }
+
+
+        public void consume()
+        {
+
         }
     }
 }

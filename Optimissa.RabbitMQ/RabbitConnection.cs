@@ -10,12 +10,13 @@ namespace Optimissa.RabbitMQ
 {
     public class RabbitConnection
     {
+        private static readonly RabbitConnection _rabbitConnection = new RabbitConnection();
         IConfiguration _configuration;
-        private string? HostName;
-        private string? UserName;
-        private string? Password;
+        private string HostName;
+        private string UserName;
+        private string Password;
 
-        public RabbitConnection(string sectionName = "RabbitConnection")
+        public RabbitConnection(string sectionName = "RabbitCredentials")
         {
             _configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

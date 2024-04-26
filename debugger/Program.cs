@@ -10,7 +10,7 @@ Console.WriteLine("Type a topic in which to send your message:");
 string topic = Console.ReadLine().ToString();
 Console.Clear();
 
-RabbitMQWriter writer = new RabbitMQWriter(connection);
+RabbitMQWriter writer = new RabbitMQWriter();
 
 while (true)
 {
