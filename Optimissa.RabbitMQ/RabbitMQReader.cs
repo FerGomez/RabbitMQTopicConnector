@@ -1,6 +1,6 @@
 ﻿namespace Optimissa.RabbitMQ
 {
-    public class Class1
+    public class RabbitMQReader
     {
 
     }
