@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optimissa.RabbitMQManager", "Optimissa.RabbitMQ\Optimissa.RabbitMQManager.csproj", "{07C482B1-511B-468D-991A-2A5D982B968D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "debugger", "debugger\debugger.csproj", "{76ADEAFA-4519-4923-AF61-3D2FB740F10D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WriterDemo", "debugger\WriterDemo.csproj", "{76ADEAFA-4519-4923-AF61-3D2FB740F10D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "debugReader", "debugReader\debugReader.csproj", "{86D4F34F-DB70-49F1-BB23-FF3560389BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderDemo", "debugReader\ReaderDemo.csproj", "{86D4F34F-DB70-49F1-BB23-FF3560389BB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

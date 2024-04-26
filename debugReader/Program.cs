@@ -6,17 +6,14 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+
         _ = RabbitMQReader.Instance.Read(["#"], (ea) =>
         {
-
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
             var routingKey = ea.RoutingKey;
             Console.WriteLine($" [x] Received '{routingKey}':'{message}'");
         });
 
-
-        Console.WriteLine(" Press [enter] to exit.");
-        Console.ReadLine();
     }
 }

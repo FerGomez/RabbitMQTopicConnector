@@ -48,7 +48,7 @@ namespace Optimissa.RabbitMQ
             var consumer = new EventingBasicConsumer(channel);
 
 
-            consumer.Received += (model, ea) => act(ea);
+            consumer.Received += (_, ea) => act(ea);
 
             channel.BasicConsume(queue: queueName,
                                  autoAck: true,
@@ -56,12 +56,6 @@ namespace Optimissa.RabbitMQ
 
 
             Console.Read();
-        }
-
-
-        public void consume()
-        {
-
         }
     }
 }

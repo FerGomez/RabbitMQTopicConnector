@@ -12,6 +12,7 @@ namespace Optimissa.RabbitMQ
     {
         private static readonly RabbitConnection _rabbitConnection = new RabbitConnection();
         IConfiguration _configuration;
+
         private string HostName;
         private string UserName;
         private string Password;
