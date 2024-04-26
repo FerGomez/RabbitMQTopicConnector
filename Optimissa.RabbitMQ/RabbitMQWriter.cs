@@ -5,11 +5,19 @@ namespace Optimissa.RabbitMQ
 {
     public class RabbitMQWriter
     {
-        public static void Write(string message, string topic)
-        {
-            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };
+        RabbitConnection _connection;
+        ConnectionFactory _factory;
 
-            using var connection = factory.CreateConnection();
+
+        public RabbitMQWriter(RabbitConnection rabbitConnection)
+        {
+            _connection = rabbitConnection;
+            _factory = _connection.CreateConnection();
+        }
+
+        public void Write(string message, string topic)
+        {
+            using var connection = _factory.CreateConnection();
             using var channel = connection.CreateModel();
 
             channel.ExchangeDeclare(exchange: "topic_logs", type: ExchangeType.Topic);
@@ -24,7 +32,6 @@ namespace Optimissa.RabbitMQ
                                  body: body);
 
             Console.WriteLine($"[x] Sent '{routingKey}':'{message}'");
-
         }
     }
 }
